@@ -5,9 +5,15 @@ document.body.onmouseup = () => (mouseDown = false);
 
 const body = document.querySelector("body");
 
-// grid size
-let size = 16;
+// old version of grid size
+// let size = 16;
 
+// ask user for grid size
+let size = parseInt(prompt("Please enter size of the rows/columns: ", "16"));
+if (size > 100){
+    alert(`Sorry, ${size} is too large, setting to default: 16`);
+    size = 16;
+}
 // old version of creating grid, square width needed to be manually fixed
 
 // const container = document.createElement("div");
@@ -44,7 +50,7 @@ for (let i = 1; i <= size; i++){
 
 function colourIn(e) {
     if (e.type ==='mouseover' && !mouseDown) return;
-    console.log(e.type);
+    // console.log(e.type);
     this.classList.add('testingClass');
 }
 
