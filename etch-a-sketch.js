@@ -5,15 +5,9 @@ document.body.onmouseup = () => (mouseDown = false);
 
 const body = document.querySelector("body");
 
-// old version of grid size
-// let size = 16;
+// initial grid size
+let size = 16;
 
-// ask user for grid size
-let size = parseInt(prompt("Please enter size of the rows/columns: ", "16"));
-if (size > 100){
-    alert(`Sorry, ${size} is too large, setting to default: 16`);
-    size = 16;
-}
 // old version of creating grid, square width needed to be manually fixed
 
 // const container = document.createElement("div");
@@ -33,7 +27,8 @@ if (size > 100){
 
 // create a grid through a nested for-loop for making rows and columns to account
 // for managing square width size of flex-wrap
-for (let i = 1; i <= size; i++){
+function createGrid(){
+    for (let i = 1; i <= size; i++){
     // create row
     const container = document.createElement("div");
     container.setAttribute('class', 'container');
@@ -45,6 +40,7 @@ for (let i = 1; i <= size; i++){
         square.setAttribute('style', 'border: 1px solid black');
         square.setAttribute('class','square');
         container.appendChild(square);
+        }
     }
 }
 
@@ -54,18 +50,51 @@ function colourIn(e) {
     this.classList.add('testingClass');
 }
 
+function gridDeletion(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
+
 function colourOut() {
+    // removes colour-in class from each square
+    const shade = document.querySelectorAll('.square');
     for (const box of shade){
         box.classList.remove('testingClass');
     }
-}
-const shade = document.querySelectorAll('.square');
-shade.forEach(box =>{
-    box.addEventListener("mousedown", colourIn);
-    box.addEventListener("mouseover", colourIn);
-});
+    // delete current grid
+    gridDeletion(body);
 
-const button = document.createElement("button");
-button.textContent = "clear";
-button.addEventListener("click", colourOut);
-body.insertBefore(button, body.children[0]);
+    // ask user for new grid size
+    size = parseInt(prompt("Please enter new size of squares for the rows/columns: ", "16"));
+    if (size > 100){
+        alert(`Sorry, ${size} is too large, setting to default: 16`);
+        size = 16;
+    }
+    // recreate grid with new dimensions
+    console.log(`size is now: ${size}`);
+    etchASketch();
+}
+
+function createMouseListener(){
+    const shade = document.querySelectorAll('.square');
+    shade.forEach(box =>{
+        box.addEventListener("mousedown", colourIn);
+        box.addEventListener("mouseover", colourIn);
+    });
+}
+
+function createButton(){
+    const button = document.createElement("button");
+    button.textContent = "clear";
+    button.addEventListener("click", colourOut);
+    body.insertBefore(button, body.children[0]);
+}
+
+function etchASketch(){
+    createGrid();
+    createMouseListener();
+    createButton();
+}
+
+etchASketch();
