@@ -8,15 +8,29 @@ body {
     align-items: center;
 } */
 .container {
-    
-    width: 600px;
+    width: 960px;
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     /* align-items: center; */
     /* justify-content: space-around; */
     
 }
 .square {
+    flex-basis: 100%;
     aspect-ratio: 1 / 1;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select:none;
+    text-size-adjust: auto;
+}
+@media screen and (min-width: 800px) {
+    .square {
+      flex: 1;
+    }
+}
+
+.testingClass {
+    background-color: black;
 }
